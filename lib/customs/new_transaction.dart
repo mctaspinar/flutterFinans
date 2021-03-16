@@ -113,7 +113,9 @@ class _NewTransactionState extends State<NewTransaction> {
                     height: 35,
                     child: ElevatedButton(
                       onPressed: () async {
-                        tarih = DateFormat.yMd().format(DateTime.now());
+                        tarih =
+                            DateFormat.yMMMMd('tr_TR').format(DateTime.now());
+                        print("ekleme tarih : $tarih");
                         var result = await _transactionModel.transactionAdd(
                             Expense(
                                 category: _selectedCategory.name,

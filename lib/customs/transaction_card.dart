@@ -4,7 +4,6 @@ import 'package:flutter_finans/providers/transactions.dart';
 import 'package:provider/provider.dart';
 import '../customs/transactions_item.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class TransactionCard extends StatefulWidget {
   @override
@@ -12,7 +11,7 @@ class TransactionCard extends StatefulWidget {
 }
 
 class _TransactionCardState extends State<TransactionCard> {
-  var tarih = DateFormat.yMd().format(DateTime.now());
+  var tarih = DateFormat.yMMMMd('tr_TR').format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -43,18 +42,18 @@ class _TransactionCardState extends State<TransactionCard> {
                     child: TextButton(
                         style: TextButton.styleFrom(primary: Colors.black),
                         onPressed: () {
-                          DatePicker.showDatePicker(
-                            context,
-                            showTitleActions: true,
-                            minTime: DateTime(2000, 1, 1),
-                            maxTime: DateTime.now(),
-                            onConfirm: (date) {
-                              setState(() {
-                                tarih = DateFormat.yMd().format(date);
-                              });
-                            },
-                            currentTime: DateTime.now(),
-                          );
+                          showDatePicker(
+                            context: context,
+                            locale: Locale('tr'),
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime.now(),
+                          ).then((value) {
+                            setState(() {
+                              tarih = DateFormat.yMMMMd('tr_TR').format(value);
+                              print("listeleme tarih : $tarih");
+                            });
+                          });
                         },
                         child: Text(
                           tarih,

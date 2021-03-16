@@ -41,17 +41,10 @@ class _HomePageState extends State<HomePage> {
       ),
       appBar: AppBar(
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.short_text,
-            color: Colors.white,
-          ),
-          onPressed: () {},
-        ),
         centerTitle: true,
         title: Text(
           "Aylık Harcamalar",
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 18),
         ),
       ),
       body: SafeArea(

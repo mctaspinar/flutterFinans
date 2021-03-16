@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_finans/pages/home_page.dart';
 import 'package:flutter_finans/providers/transactions.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  Intl.defaultLocale = 'tr_TR';
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   static const Map<int, Color> colorMap = {
@@ -32,6 +40,14 @@ class _MyAppState extends State<MyApp> {
     return ChangeNotifierProvider(
       create: (context) => Transactions(),
       child: MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', 'US'),
+          const Locale('tr', 'TR  '),
+        ],
         title: 'Hesap Kitap',
         home: HomePage(),
         debugShowCheckedModeBanner: false,

@@ -19,7 +19,7 @@ class TransactionRepo {
               id: 1,
               category: "Sigara",
               color: Color(0xff40bad5),
-              currentDate: DateFormat.yMd().format(DateTime.now()),
+              currentDate: DateFormat.yMMMMd('tr_TR').format(DateTime.now()),
               subtitle: "Deneme",
               value: 12.99)
         ];
@@ -37,7 +37,7 @@ class TransactionRepo {
               id: 1,
               category: "Sigara",
               color: Color(0xff40bad5),
-              currentDate: DateFormat.yMd().format(DateTime.now()),
+              currentDate: DateFormat.yMMMMd('tr_TR').format(DateTime.now()),
               subtitle: "Deneme",
               value: 12.99)
         ];
@@ -56,7 +56,7 @@ class TransactionRepo {
             id: 1,
             category: "Sigara",
             color: Color(0xff40bad5),
-            currentDate: DateFormat.yMd().format(DateTime.now()),
+            currentDate: DateFormat.yMMMMd('tr_TR').format(DateTime.now()),
             subtitle: "Deneme",
             value: 12.99);
       } else {
