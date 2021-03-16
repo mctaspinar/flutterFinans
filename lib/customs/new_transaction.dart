@@ -5,22 +5,39 @@ import '../providers/transactions.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class NewTransaction extends StatefulWidget {
-  final Function fonks;
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-  NewTransaction(this.fonks);
+class NewTransaction extends StatefulWidget {
+  final Function done;
+  NewTransaction(this.done);
   @override
   _NewTransactionState createState() => _NewTransactionState();
 }
 
 class _NewTransactionState extends State<NewTransaction> {
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
   List<Category> _categories = Category.getCategories();
   List<DropdownMenuItem<Category>> _dropdownMenuItems;
   Category _selectedCategory;
-  var _formkey = GlobalKey<FormState>();
-  var _txtAciklama;
-  double _txtTutar;
-  var tarih;
+  void _submitData() {
+    final enteredTitle = _titleController.text;
+    final enteredAmount = _amountController.text;
+    if (_amountController.text.isEmpty) {
+      return;
+    }
+
+    if (enteredTitle.isEmpty || double.parse(enteredAmount) < 0) {
+      return;
+    } else {
+      print(enteredTitle + " " + enteredAmount);
+      _titleController.text = "";
+      _amountController.text = "";
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   void initState() {
     _dropdownMenuItems = buildDropdownMenuItems(_categories);
@@ -43,6 +60,96 @@ class _NewTransactionState extends State<NewTransaction> {
     }
     return items;
   }
+
+  @override
+  Widget build(BuildContext context) {
+    final _transactionModel = Provider.of<Transactions>(context, listen: false);
+    var tarih;
+    return Card(
+      elevation: 5,
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: double.infinity,
+                child: DropdownButtonFormField(
+                  isDense: true,
+                  decoration: InputDecoration(
+                      labelText: "Kategori",
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.all(10)),
+                  value: _selectedCategory,
+                  items: _dropdownMenuItems,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedCategory = value;
+                      print(_selectedCategory.name);
+                    });
+                  },
+                ),
+              ),
+            ),
+            TextField(
+              controller: _titleController,
+              decoration:
+                  InputDecoration(hintText: "İçerik", labelText: "İçerik"),
+              onSubmitted: (_) => _submitData(),
+            ),
+            TextField(
+              keyboardType: TextInputType.number,
+              controller: _amountController,
+              decoration:
+                  InputDecoration(hintText: "Harcama", labelText: "Harcama"),
+              onSubmitted: (_) => _submitData(),
+            ),
+            Container(
+              height: 35,
+              child: ElevatedButton(
+                onPressed: () async {
+                  tarih = DateFormat.yMd().format(DateTime.now());
+                  var result = await _transactionModel.transactionAdd(Expense(
+                      category: _selectedCategory.name,
+                      value: double.parse(_amountController.text),
+                      subtitle: _titleController.text,
+                      currentDate: tarih));
+                  if (result != 0) {
+                    widget.done();
+                    Navigator.of(context).pop();
+                  }
+                },
+                child: Text(
+                  "Harcama Ekle",
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: TextButton.styleFrom(
+                    primary: Theme.of(context).primaryColor),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/*class NewTransaction extends StatefulWidget {
+  final Function fonks;
+
+  NewTransaction(this.fonks);
+  @override
+  _NewTransactionState createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  var _formkey = GlobalKey<FormState>();
+  var _txtAciklama;
+  double _txtTutar;
+  var tarih;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -88,63 +195,6 @@ class _NewTransactionState extends State<NewTransaction> {
                     },
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  maxLines: 2,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                  decoration: InputDecoration(
-                      isDense: true,
-                      labelText: 'Açıklama',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.all(10)),
-                  onChanged: (value) {
-                    setState(() {
-                      _txtAciklama = value;
-                      print(_txtAciklama);
-                    });
-                  },
-                  validator: (value) {
-                    if (value.length < 3) {
-                      return "En az 3 karakter giriniz.";
-                    }
-                  },
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
-                        decoration: InputDecoration(labelText: 'Tutar'),
-                        onChanged: (value) {
-                          setState(() {
-                            _txtTutar = double.parse(value);
-                          });
-                        },
-                        validator: (value) {
-                          if (value.length < 1) {
-                            return null;
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -208,3 +258,4 @@ class _NewTransactionState extends State<NewTransaction> {
     );
   }
 }
+*/

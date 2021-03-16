@@ -23,6 +23,21 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(.9),
       resizeToAvoidBottomInset: false,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (_) {
+                return GestureDetector(
+                  onTap: () {},
+                  child: NewTransaction(_done),
+                  behavior: HitTestBehavior.opaque,
+                );
+              });
+        },
+      ),
       appBar: AppBar(
         elevation: 0,
         leading: IconButton(
@@ -52,24 +67,11 @@ class _HomePageState extends State<HomePage> {
                         child: Container(
                           height: MediaQuery.of(context).size.height - 150,
                           child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.supervised_user_circle,
-                                  color: Theme.of(context).primaryColor,
-                                  size: 120,
-                                ),
-                                Text(
-                                  "Kullanıcı yok..",
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(.3),
-                                      fontSize: 16),
-                                ),
-                              ],
-                            ),
-                          ),
+                              child: Icon(
+                            Icons.pause_circle_outline_outlined,
+                            color: Theme.of(context).primaryColor,
+                            size: 120,
+                          )),
                         ),
                       ),
                     );
@@ -94,10 +96,10 @@ class _HomePageState extends State<HomePage> {
                                                   .height *
                                               .03,
                                         ),
-                                        NewTransaction(_done)
+                                        //NewTransaction(_done)
                                       ],
                                     ),
-                                    TransactionCard(),
+                                    TransactionCard()
                                   ],
                                 ),
                               ),
@@ -115,7 +117,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<Null> _refreshList() async {
     setState(() {});
-    await Future.delayed(Duration(milliseconds: 700));
+    await Future.delayed(Duration(milliseconds: 100));
     return null;
   }
 }

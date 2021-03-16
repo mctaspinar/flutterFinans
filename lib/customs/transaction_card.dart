@@ -13,7 +13,6 @@ class TransactionCard extends StatefulWidget {
 
 class _TransactionCardState extends State<TransactionCard> {
   var tarih = DateFormat.yMd().format(DateTime.now());
-  var _height = .07;
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -24,13 +23,11 @@ class _TransactionCardState extends State<TransactionCard> {
       initialData: expenseList,
       builder: (context, AsyncSnapshot<List<Expense>> snapshot) {
         return Positioned(
-          bottom: 0,
+          top: mediaQuery.size.height * .3,
           left: mediaQuery.size.width * .03,
-          child: AnimatedContainer(
-            duration: Duration(seconds: 1),
-            curve: Curves.fastOutSlowIn,
+          child: Container(
             width: mediaQuery.size.width * .94,
-            height: mediaQuery.size.height * _height,
+            height: mediaQuery.size.height * .6,
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -38,47 +35,34 @@ class _TransactionCardState extends State<TransactionCard> {
                     topRight: Radius.circular(12))),
             child: Column(
               children: [
-                GestureDetector(
-                  onVerticalDragStart: (_) {
-                    setState(() {
-                      _height = .07;
-                    });
-                  },
-                  onVerticalDragDown: (_) {
-                    setState(() {
-                      _height = .54;
-                    });
-                  },
-                  child: Container(
-                    height: 50,
-                    width: mediaQuery.size.width,
-                    child: Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: TextButton(
-                          style: TextButton.styleFrom(primary: Colors.black),
-                          onPressed: () {
-                            DatePicker.showDatePicker(
-                              context,
-                              showTitleActions: true,
-                              minTime: DateTime(2000, 1, 1),
-                              maxTime: DateTime.now(),
-                              onConfirm: (date) {
-                                setState(() {
-                                  tarih = DateFormat.yMd().format(date);
-                                  _height = .54;
-                                });
-                              },
-                              currentTime: DateTime.now(),
-                            );
-                          },
-                          child: Text(
-                            tarih,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1),
-                          )),
-                    ),
+                Container(
+                  height: 50,
+                  width: mediaQuery.size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: TextButton(
+                        style: TextButton.styleFrom(primary: Colors.black),
+                        onPressed: () {
+                          DatePicker.showDatePicker(
+                            context,
+                            showTitleActions: true,
+                            minTime: DateTime(2000, 1, 1),
+                            maxTime: DateTime.now(),
+                            onConfirm: (date) {
+                              setState(() {
+                                tarih = DateFormat.yMd().format(date);
+                              });
+                            },
+                            currentTime: DateTime.now(),
+                          );
+                        },
+                        child: Text(
+                          tarih,
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1),
+                        )),
                   ),
                 ),
                 Expanded(
