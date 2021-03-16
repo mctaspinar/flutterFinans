@@ -65,71 +65,78 @@ class _NewTransactionState extends State<NewTransaction> {
   Widget build(BuildContext context) {
     final _transactionModel = Provider.of<Transactions>(context, listen: false);
     var tarih;
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: double.infinity,
-                child: DropdownButtonFormField(
-                  isDense: true,
-                  decoration: InputDecoration(
-                      labelText: "Kategori",
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.all(10)),
-                  value: _selectedCategory,
-                  items: _dropdownMenuItems,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedCategory = value;
-                      print(_selectedCategory.name);
-                    });
-                  },
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Card(
+          elevation: 5,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: double.infinity,
+                    child: DropdownButtonFormField(
+                      isDense: true,
+                      decoration: InputDecoration(
+                          labelText: "Kategori",
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.all(10)),
+                      value: _selectedCategory,
+                      items: _dropdownMenuItems,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedCategory = value;
+                          print(_selectedCategory.name);
+                        });
+                      },
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            TextField(
-              controller: _titleController,
-              decoration:
-                  InputDecoration(hintText: "İçerik", labelText: "İçerik"),
-              onSubmitted: (_) => _submitData(),
-            ),
-            TextField(
-              keyboardType: TextInputType.number,
-              controller: _amountController,
-              decoration:
-                  InputDecoration(hintText: "Harcama", labelText: "Harcama"),
-              onSubmitted: (_) => _submitData(),
-            ),
-            Container(
-              height: 35,
-              child: ElevatedButton(
-                onPressed: () async {
-                  tarih = DateFormat.yMd().format(DateTime.now());
-                  var result = await _transactionModel.transactionAdd(Expense(
-                      category: _selectedCategory.name,
-                      value: double.parse(_amountController.text),
-                      subtitle: _titleController.text,
-                      currentDate: tarih));
-                  if (result != 0) {
-                    widget.done();
-                    Navigator.of(context).pop();
-                  }
-                },
-                child: Text(
-                  "Harcama Ekle",
-                  style: TextStyle(color: Colors.white),
+                TextField(
+                  controller: _titleController,
+                  decoration: InputDecoration(labelText: "İçerik"),
+                  onSubmitted: (_) => _submitData(),
                 ),
-                style: TextButton.styleFrom(
-                    primary: Theme.of(context).primaryColor),
-              ),
+                TextField(
+                  keyboardType: TextInputType.number,
+                  controller: _amountController,
+                  decoration: InputDecoration(labelText: "Harcama"),
+                  onSubmitted: (_) => _submitData(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Container(
+                    height: 35,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        tarih = DateFormat.yMd().format(DateTime.now());
+                        var result = await _transactionModel.transactionAdd(
+                            Expense(
+                                category: _selectedCategory.name,
+                                value: double.parse(_amountController.text),
+                                subtitle: _titleController.text,
+                                currentDate: tarih));
+                        if (result != 0) {
+                          widget.done();
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: Text(
+                        "Harcama Ekle",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          primary: Theme.of(context).primaryColor),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

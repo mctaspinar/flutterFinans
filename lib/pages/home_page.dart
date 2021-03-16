@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           showModalBottomSheet(
               context: context,
+              isScrollControlled: true,
               builder: (_) {
                 return GestureDetector(
                   onTap: () {},
