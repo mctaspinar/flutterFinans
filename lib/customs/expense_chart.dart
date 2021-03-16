@@ -12,7 +12,7 @@ class ExpenseChart extends StatelessWidget {
     return charts.PieChart(
       seriesList,
       animate: animate,
-      animationDuration: Duration(seconds: 1),
+      animationDuration: Duration(milliseconds: 700),
       defaultRenderer: charts.ArcRendererConfig(
         arcWidth: 18,
         strokeWidthPx: 0,

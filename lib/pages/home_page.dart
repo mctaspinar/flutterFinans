@@ -44,8 +44,35 @@ class _HomePageState extends State<HomePage> {
             return FutureBuilder(
                 future: _transactionModel.getAllExpense(),
                 builder: (context, AsyncSnapshot<List<Expense>> snapshot) {
-                  if (snapshot.connectionState != ConnectionState.done)
-                    return SizedBox();
+                  if (!snapshot.hasData)
+                    return RefreshIndicator(
+                      onRefresh: _refreshList,
+                      child: SingleChildScrollView(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height - 150,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.supervised_user_circle,
+                                  color: Theme.of(context).primaryColor,
+                                  size: 120,
+                                ),
+                                Text(
+                                  "Kullanıcı yok..",
+                                  style: TextStyle(
+                                      color: Colors.black.withOpacity(.3),
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
                   else
                     return SingleChildScrollView(
                       child: ConstrainedBox(
@@ -84,5 +111,11 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  Future<Null> _refreshList() async {
+    setState(() {});
+    await Future.delayed(Duration(milliseconds: 700));
+    return null;
   }
 }

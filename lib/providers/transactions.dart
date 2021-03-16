@@ -40,12 +40,9 @@ class Transactions with ChangeNotifier {
   Future<List<Expense>> getAllExpense() async {
     try {
       var list = await _transactionRepo.getExpenseList();
-      state = ViewState.Busy;
       return list;
     } catch (e) {
       return [];
-    } finally {
-      state = ViewState.Idle;
     }
   }
 
@@ -53,24 +50,17 @@ class Transactions with ChangeNotifier {
     try {
       var list = await _transactionRepo.getAll(date);
       List<Expense> temp = [];
-      state = ViewState.Busy;
       for (Map map in list) {
         temp.add(Expense.FromMap(map));
       }
       return temp;
-    } catch (e) {} finally {
-      state = ViewState.Idle;
-    }
+    } catch (e) {}
   }
 
   Future<int> transactionAdd(Expense expense) async {
     try {
       var result = await _transactionRepo.transactionAdd(expense);
-      notifyListeners();
-      await getAllExpense();
       return result;
-    } catch (e) {} finally {
-      state = ViewState.Idle;
-    }
+    } catch (e) {}
   }
 }

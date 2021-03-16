@@ -38,7 +38,7 @@ class Header extends StatelessWidget {
               height: mediaQuery.size.height * .25,
               child: ExpenseChart(
                 _series,
-                animate: false,
+                animate: true,
               ),
             ),
           ],
