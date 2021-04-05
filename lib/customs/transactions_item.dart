@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finans/models/expense.dart';
+
+import '../models/expense.dart';
 
 class TransactionItem extends StatelessWidget {
   final Expense itemOfExpense;

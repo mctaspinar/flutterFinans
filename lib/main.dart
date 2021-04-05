@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_finans/pages/home_page.dart';
-import 'package:flutter_finans/providers/transactions.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import './pages/home_page.dart';
+
+import './providers/transactions.dart';
 
 void main() {
   Intl.defaultLocale = 'tr_TR';

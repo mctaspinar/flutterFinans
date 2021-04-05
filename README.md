@@ -1,4 +1,4 @@
-# flutter_finans
+# flutter_harcamalar
 
 A new Flutter project.
 

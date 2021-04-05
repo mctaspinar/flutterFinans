@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_finans/customs/new_transaction.dart';
-import 'package:flutter_finans/customs/transaction_card.dart';
-import 'package:flutter_finans/models/expense.dart';
-import 'package:flutter_finans/providers/transactions.dart';
 import 'package:provider/provider.dart';
+
+import '../customs/new_transaction.dart';
+import '../customs/transaction_card.dart';
 import "../customs/header.dart";
+
+import '../models/expense.dart';
+import '../providers/transactions.dart';
 
 class HomePage extends StatefulWidget {
   @override

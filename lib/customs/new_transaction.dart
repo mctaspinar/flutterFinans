@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/category.dart';
-import '../models/expense.dart';
-import '../providers/transactions.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import '../models/category.dart';
+import '../models/expense.dart';
+import '../providers/transactions.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function done;

@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:flutter_finans/models/expense.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+
+import '../models/expense.dart';
 
 class DatabaseHelper {
   static DatabaseHelper _databaseHelper;
